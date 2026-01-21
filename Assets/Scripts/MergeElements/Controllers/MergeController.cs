@@ -2,6 +2,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Core.MergeElements.Models;
 using Core.MergeElements.Views;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.MergeElements.Controllers
@@ -153,6 +154,8 @@ namespace Core.MergeElements.Controllers
                     _tempElementUI.gameObject.SetActive(false);
 
                     cell.Model = cell.Model.NextMergeElement;
+                    cell.View.RectTransform.DOScale(1.2f, 0.1f)
+                        .SetLoops(2, LoopType.Yoyo);
                 }
             }
             ResetSelectbleElement();
