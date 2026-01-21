@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Core.MergeElements.Controllers
 {
+    /// <summary>
+    /// Контроллер перемещения, спавна и мерджа элементов
+    /// </summary>
     public class MergeController
     {
         private MergeElementSettings _firstElement;
@@ -32,6 +35,9 @@ namespace Core.MergeElements.Controllers
             Init();
         }
 
+        /// <summary>
+        /// Создание моделей и вьюх
+        /// </summary>
         public void Init()
         {
             for (int i = 0; i < _elementsGrid.Length; i++)
@@ -50,6 +56,9 @@ namespace Core.MergeElements.Controllers
             _tempElementUI.gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Отображение окна и подписка на UI события
+        /// </summary>
         public void ShowWindow()
         {
             _mergeWindowUI.Show();
@@ -61,12 +70,18 @@ namespace Core.MergeElements.Controllers
             _mergeWindowUI.OnPointerUp += HandlePointerUp;
         }
 
+        /// <summary>
+        /// Скрытие окна и очистка всех событий
+        /// </summary>
         public void HideWindo()
         {
             _mergeWindowUI.Hide();
             Reset();
         }
 
+        /// <summary>
+        /// Очистка поля
+        /// </summary>
         private void Reset()
         {
             ResetSelectbleElement();
@@ -77,6 +92,9 @@ namespace Core.MergeElements.Controllers
             }
         }
 
+        /// <summary>
+        /// Пробуем добавить новый элемент на сетку
+        /// </summary>
         private void TryAddElement()
         {            
             var emptyElements = _elementsGrid
@@ -96,6 +114,12 @@ namespace Core.MergeElements.Controllers
             cell.View.gameObject.SetActive(true);
         }
 
+        /// <summary>
+        /// Ищем на какой элемент попала мышка
+        /// </summary>
+        /// <param name="pointerPos">позиция мыши</param>
+        /// <param name="mergeCell">возвращаем найденную ячейку</param>
+        /// <returns></returns>
         private bool TryGetCellOnPosition(Vector2 pointerPos, out MergeCell mergeCell)
         {
             mergeCell = null;
@@ -110,6 +134,10 @@ namespace Core.MergeElements.Controllers
             return false;
         }
 
+        /// <summary>
+        /// Получаем координаты нажатия мыши и запоминаем выбранный элемент. Визуально отображаться будет временный UI элемент
+        /// </summary>
+        /// <param name="pointerPos">Координата клика</param>
         private void HandlePointerDown(Vector2 pointerPos)
         {
             ResetSelectbleElement();
@@ -127,12 +155,20 @@ namespace Core.MergeElements.Controllers
             }
         }
 
+        /// <summary>
+        /// Перемещаем временный UI элемент
+        /// </summary>
+        /// <param name="pointerPos">Координата текущего положения мыши</param>
         private void HandlePointerDrag(Vector2 pointerPos)
         {
             if (_selectbleCalle == null) return;
             _tempElementUI.RectTransform.anchoredPosition = pointerPos + _activeElementPointerOffset;
         }
 
+        /// <summary>
+        /// Получаем координаты мыши при отпускании UI элемента. Проверяем мёрджи и прочее, затем выключаем временный UI элемент
+        /// </summary>
+        /// <param name="pointerPos">Координата клика</param>
         private void HandlePointerUp(Vector2 pointerPos)
         {
             if (_selectbleCalle == null) return;
@@ -161,6 +197,9 @@ namespace Core.MergeElements.Controllers
             ResetSelectbleElement();
         }
 
+        /// <summary>
+        /// Сброс выбранного элемента дял исключения багов с быстрыми кликами
+        /// </summary>
         private void ResetSelectbleElement()
         {
             _tempElementUI.gameObject.SetActive(false);
