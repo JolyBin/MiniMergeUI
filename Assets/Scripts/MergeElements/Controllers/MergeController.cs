@@ -1,5 +1,5 @@
+using System;
 using System.Linq;
-using System.Xml.Linq;
 using Core.MergeElements.Models;
 using Core.MergeElements.Views;
 using DG.Tweening;
@@ -12,6 +12,8 @@ namespace Core.MergeElements.Controllers
     /// </summary>
     public class MergeController
     {
+        public event Action OnGameOver;
+
         private MergeElementSettings _firstElement;
         private MergeCell[] _elementsGrid;
 
@@ -73,10 +75,10 @@ namespace Core.MergeElements.Controllers
         /// <summary>
         /// Скрытие окна и очистка всех событий
         /// </summary>
-        public void HideWindo()
+        public void HideWindow()
         {
             _mergeWindowUI.Hide();
-            Reset();
+            OnGameOver = null;
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace Core.MergeElements.Controllers
             foreach (MergeCell cell in _elementsGrid)
             {
                 cell.Model = null;
-                cell.View.gameObject.SetActive(false);
+                
             }
         }
 
@@ -105,7 +107,7 @@ namespace Core.MergeElements.Controllers
             if (emptyElements.Length == 0)
                 return;
 
-            int randomindex = emptyElements[Random.Range(0, emptyElements.Length)];
+            int randomindex = emptyElements[UnityEngine.Random.Range(0, emptyElements.Length)];
             MergeElement newElement = _firstElement.GetMergeElement();
 
             var cell = _elementsGrid[randomindex];
@@ -192,9 +194,22 @@ namespace Core.MergeElements.Controllers
                     cell.Model = cell.Model.NextMergeElement;
                     cell.View.RectTransform.DOScale(1.2f, 0.1f)
                         .SetLoops(2, LoopType.Yoyo);
+
+                    if(cell.Model.NextMergeElement == null)
+                    {
+                        GameOver();
+                    }
                 }
             }
             ResetSelectbleElement();
+        }
+
+        private void GameOver()
+        {
+            OnGameOver?.Invoke();
+            _mergeWindowUI.OnPointerDown -= HandlePointerDown;
+            _mergeWindowUI.OnPointerDrag -= HandlePointerDrag;
+            _mergeWindowUI.OnPointerUp -= HandlePointerUp;
         }
 
         /// <summary>
