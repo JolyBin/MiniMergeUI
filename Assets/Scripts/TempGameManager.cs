@@ -12,11 +12,11 @@ namespace Core
         [SerializeField]
         private MergeElementUI _mergeElementUIPrefab;
         [SerializeField]
-        private MergeElementSettings[] _orderElements;
+        private MergeElementSettings _firstElement;
 
         private void Start()
         {
-            MergeController mergeController = new(_mergeWindowUI.MaxCount, _orderElements, _mergeElementUIPrefab, _mergeWindowUI);
+            MergeController mergeController = new(_mergeWindowUI.MaxCount, _firstElement, _mergeElementUIPrefab, _mergeWindowUI);
             mergeController.ShowWindow();
         }
     }

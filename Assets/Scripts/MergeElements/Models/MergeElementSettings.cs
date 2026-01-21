@@ -5,12 +5,14 @@ namespace Core.MergeElements.Models
     [CreateAssetMenu(fileName = "Merge Element", menuName = "Merge Elements/Create Merge Element")]
     public class MergeElementSettings : ScriptableObject
     {
-        [field:SerializeField]
-        public int ID {  get; private set; }
-        [field:SerializeField]
-        public Sprite Icon { get; private set; }
+        [SerializeField]
+        private int _id;
+        [SerializeField]
+        private Sprite _icon;
+        [SerializeField]
+        private MergeElementSettings _nextElement;
 
-        public MergeElement GetMergeElement() => new MergeElement(ID, Icon);
+        public MergeElement GetMergeElement() => new MergeElement(_id, _icon, _nextElement?.GetMergeElement());
 
     }
 }

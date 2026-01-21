@@ -8,7 +8,7 @@ namespace Core.MergeElements.Controllers
 {
     public class MergeController
     {
-        private MergeElementSettings[] _orderElements;
+        private MergeElementSettings _firstElement;
         private MergeCell[] _elementsGrid;
 
         //UI
@@ -20,9 +20,9 @@ namespace Core.MergeElements.Controllers
         private MergeCell _selectbleCalle;
 
 
-        public MergeController(int maxElementsCount, MergeElementSettings[] orderElemets, MergeElementUI mergewElementUIPrefab, MergeWindowUI mergeWindowUI)
+        public MergeController(int maxElementsCount, MergeElementSettings firstElement, MergeElementUI mergewElementUIPrefab, MergeWindowUI mergeWindowUI)
         {
-            _orderElements = orderElemets;
+            _firstElement = firstElement;
             _elementsGrid = new MergeCell[maxElementsCount];
 
             _mergeWindowUI = mergeWindowUI;
@@ -87,7 +87,7 @@ namespace Core.MergeElements.Controllers
                 return;
 
             int randomindex = emptyElements[Random.Range(0, emptyElements.Length)];
-            MergeElement newElement = _orderElements[0].GetMergeElement();
+            MergeElement newElement = _firstElement.GetMergeElement();
 
             var cell = _elementsGrid[randomindex];
             cell.Model = newElement;
@@ -145,6 +145,14 @@ namespace Core.MergeElements.Controllers
                     _selectbleCalle = null;
                     _tempElementUI.gameObject.SetActive(false);
                     return;
+                }
+                if (cell != _selectbleCalle && cell.Model.ID == _selectbleCalle.Model.ID && cell.Model.NextMergeElement != null)
+                {
+                    _selectbleCalle.Model = null;
+                    _selectbleCalle = null;
+                    _tempElementUI.gameObject.SetActive(false);
+
+                    cell.Model = cell.Model.NextMergeElement;
                 }
             }
             ResetSelectbleElement();

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db62bdabe2c808d45a575dc2d15bccd5, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 4
-  <Icon>k__BackingField: {fileID: -865474740, guid: 168ffdeea5a15824e9a81ab03bba82a7, type: 3}
+  _id: 4
+  _icon: {fileID: -865474740, guid: 168ffdeea5a15824e9a81ab03bba82a7, type: 3}
+  _nextElement: {fileID: 11400000, guid: 48e15c6920d36da40a0f1250a0a216a4, type: 2}
