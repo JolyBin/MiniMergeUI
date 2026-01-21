@@ -60,6 +60,7 @@ namespace Core.MergeElements.Views
             element.SetParent(_elementPositions[index]);
             element.offsetMin = Vector2.zero;
             element.offsetMax = Vector2.zero;
+            element.transform.localScale = Vector3.one;
         }
 
         void Update()

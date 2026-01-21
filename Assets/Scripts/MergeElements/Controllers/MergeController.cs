@@ -55,6 +55,7 @@ namespace Core.MergeElements.Controllers
             _tempElementUI.RectTransform.SetParent(lastElem.RectTransform.parent);
             _tempElementUI.RectTransform.offsetMin = Vector2.zero;
             _tempElementUI.RectTransform.offsetMax = Vector2.zero;
+            _tempElementUI.RectTransform.localScale = Vector2.one;
             _tempElementUI.gameObject.SetActive(false);
         }
 
